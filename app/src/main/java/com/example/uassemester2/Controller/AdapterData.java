@@ -3,6 +3,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,17 +47,31 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
             holder.tvcategory.setText("Kategori\t: " + daftar_item.get(position).getKategori());
             LinearLayout linearLayout = holder.gImages.findViewById(R.id.gImages);
 
-            String[] gambar = daftar_item.get(position).getDaftar_gambar().toArray(new String[0]);
-            for (String item : gambar) {
-                ImageView imageView = new ImageView(holder.gImages.getContext());
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                layoutParams.setMargins(8, 0, 8, 0);
-                imageView.setLayoutParams(layoutParams);
-                linearLayout.addView(imageView);
-                new AmbilGambar(imageView).execute(item);
+            if (linearLayout.getChildCount() == 0){
+                String[] gambar = daftar_item.get(position).getDaftar_gambar().toArray(new String[0]);
+                for (String item : gambar) {
+                    ImageView imageView = new ImageView(holder.gImages.getContext());
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 200);
+                    layoutParams.setMargins(8, 0, 8, 0);
+
+                    imageView.setLayoutParams(layoutParams);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+                    linearLayout.addView(imageView);
+                    new AmbilGambar(imageView).execute(item);
+
+                    imageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                            int tinggi = imageView.getHeight();
+                            float rasio = (float) tinggi / 200;
+                            int lebar = (int) (rasio * tinggi);
+                            layoutParams.width = lebar;
+                            imageView.setLayoutParams(layoutParams);
+                        }
+                    });
+                }
             }
         }catch (Exception e){
             e.printStackTrace();

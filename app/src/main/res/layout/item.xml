@@ -22,29 +22,30 @@
             <ImageView
                 android:id="@+id/ivThumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black"/>
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="ini adalah judul"
                 android:text="Judul"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="ini adalah judul"
                     android:text="Rp. 69.000"
                     android:textSize="18sp"
                     android:paddingLeft="10sp"
@@ -79,18 +80,8 @@
                 android:textSize="18sp"
                 android:textColor="#969696"
                 android:text="lorem ipsum kolor asiap reguler inih mh ceritya deskripsi ya ges ya sippp mantap lanjutkeun..."
-                android:layout_marginBottom="10dp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20sp"
-                android:textSize="19sp"
-                android:textColor="#969696"
-                android:text="Info Detail"
-                android:textStyle="bold"
-                />
-
+                android:layout_marginBottom="5dp"
+                android:justificationMode="inter_word"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -125,13 +116,15 @@
                 android:id="@+id/horizontalScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:padding="20dp">
 
                 <LinearLayout
                     android:id="@+id/gImages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
                 </LinearLayout>
 
             </HorizontalScrollView>
