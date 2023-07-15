@@ -37,17 +37,17 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
     @Override
     public void onBindViewHolder(@NonNull AdapterData.HolderData holder, int position) {
         try{
-            new AmbilGambar(holder.ivThumbnail).execute(daftar_item.get(position).getThumbnail());
-            holder.tvTitle.setText(daftar_item.get(position).getJudul());
-            holder.tvPrice.setText(dolar.format(daftar_item.get(position).getHarga()));
-            holder.tvRating.setText(String.valueOf(daftar_item.get(position).getRating()));
-            holder.tvDescription.setText(daftar_item.get(position).getDeskripsi());
-            holder.tvstock.setText("Stok\t\t\t\t: " + daftar_item.get(position).getStok());
-            holder.tvbrand.setText("Merek\t\t\t: " + daftar_item.get(position).getMerek());
-            holder.tvcategory.setText("Kategori\t: " + daftar_item.get(position).getKategori());
-            LinearLayout linearLayout = holder.gImages.findViewById(R.id.gImages);
+            if (holder.ivThumbnail.getDrawable() == null || holder.gImages.getChildCount() == 0){
+                new AmbilGambar(holder.ivThumbnail).execute(daftar_item.get(position).getThumbnail());
+                holder.tvTitle.setText(daftar_item.get(position).getJudul());
+                holder.tvPrice.setText(dolar.format(daftar_item.get(position).getHarga()));
+                holder.tvDisc.setText(daftar_item.get(position).getDiskon() + "% off");
+                holder.tvRating.setText(String.valueOf(daftar_item.get(position).getRating()));
+                holder.tvDescription.setText(daftar_item.get(position).getDeskripsi());
+                holder.tvstock.setText("Stok\t\t\t\t: " + daftar_item.get(position).getStok());
+                holder.tvbrand.setText("Merek\t\t\t: " + daftar_item.get(position).getMerek());
+                holder.tvcategory.setText("Kategori\t: " + daftar_item.get(position).getKategori());
 
-            if (linearLayout.getChildCount() == 0){
                 String[] gambar = daftar_item.get(position).getDaftar_gambar().toArray(new String[0]);
                 for (String item : gambar) {
                     ImageView imageView = new ImageView(holder.gImages.getContext());
@@ -57,7 +57,7 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
                     imageView.setLayoutParams(layoutParams);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
-                    linearLayout.addView(imageView);
+                    holder.gImages.addView(imageView);
                     new AmbilGambar(imageView).execute(item);
 
                     imageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -86,7 +86,8 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
     public class HolderData extends RecyclerView.ViewHolder{
         ImageView ivThumbnail;
         LinearLayout gImages;
-        TextView tvTitle, tvPrice, tvRating,tvDescription, tvstock, tvbrand, tvcategory;
+        TextView tvTitle, tvPrice, tvDisc,tvRating,tvDescription, tvstock, tvbrand, tvcategory;
+        LinearLayout gimages;
 
         public HolderData(@NonNull View itemView) {
             super(itemView);
@@ -99,6 +100,8 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
             tvstock = itemView.findViewById(R.id.tvstock);
             tvbrand = itemView.findViewById(R.id.tvbrand);
             tvcategory = itemView.findViewById(R.id.tvcategory);
+            gImages = itemView.findViewById(R.id.gImages);
+            tvDisc = itemView.findViewById(R.id.tvDisc);
             gImages = itemView.findViewById(R.id.gImages);
         }
     }
